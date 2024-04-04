@@ -1,11 +1,15 @@
 {
-    "[csharp]": {
-        "editor.defaultFormatter": "ms-dotnettools.csharp",
-        "editor.codeActionsOnSave": {
-            "source.fixAll": false,
-            "source.organizeImports": true,
-            "source.sortMembers": true,
-            "source.removeUnusedImports": true
-        }
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": false,
+      "source.organizeImports": true,
+      "source.sortMembers": true,
+      "source.removeUnusedImports": true
     }
+  },
+  "[markdown]": {
+    "editor.wordWrap": "off"
+  },
+  "dotnet.automaticallyCreateSolutionInWorkspace": false
 }

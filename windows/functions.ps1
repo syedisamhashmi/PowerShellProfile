@@ -15,28 +15,24 @@ function profile() {
 #? Where Chrome is installed
 $CHROME_LOCATION = ""      
 function kill-chrome-re-run-with-debug {
-  foreach($id in (ps | Where ProcessName -eq chrome | Select Id))
-  {
+  foreach ($id in (ps | Where ProcessName -eq chrome | Select Id)) {
     Stop-Process -Id $id.Id
   }
   Start-Process $CHROME_LOCATION --remote-debugging-port=9222
 }
 
 #------------------------------------------------------------------------------
-function setup-modules() 
-{
+function setup-modules() {
   install-package("posh-git")
   install-package("z")
 }
 
-function install-package($package)
-{
+function install-package($package) {
   if (
     -Not(
       Get-InstalledModule -Name $package  -errorAction SilentlyContinue
     )
-  )
-  {
+  ) {
     echo "Package $package is missing... Installing $package..."
     Install-Module $package
   }
@@ -51,11 +47,11 @@ function git-make-pull-request ($target, $description) {
   }
   else {
     $branch = git for-each-ref refs/remotes/origin/* --format='%(refname:short)' `
-    | % { $_ -replace "origin/","" } `
-    | sort | unique `
-    | fzf;
+  | ForEach-Object { $_ -replace "origin/", "" } `
+  | Sort-Object | Get-Unique `
+  | fzf;
   }
-  echo "Making PR to: $branch"
+  Write-Output "Making PR to: $branch"
 
   # If there is a description override, don't use template content or git log. 
   if (-not $description) {
@@ -94,7 +90,7 @@ function git-make-pull-request ($target, $description) {
     "--title"
     $title
     "--description"
-    $description
+    $description.Substring(0, [math]::Min($description.Length, 3999))
   )
   az repos pr create @params
 }

@@ -17,8 +17,7 @@ $TOOLS_PATH = "c:/tools";
 if (
   ((Get-Location).tostring() -eq 'C:\WINDOWS\system32') -or
   ((Get-Location).tostring() -eq $HOME)
-)
-{
+) {
   cd $PROJECT_ROOT;
 }
 
