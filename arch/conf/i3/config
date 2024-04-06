@@ -112,7 +112,12 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
+# Removed in favor of dmenu.
 #bindsym $mod+d focus child
+
+# Restart wifi when it crashes...
+bindsym $mod+ctrl+Shift+w exec nmcli networking off && nmcli networking on
+
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
