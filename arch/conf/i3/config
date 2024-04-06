@@ -194,7 +194,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
  id bar-1
-  output HDMI-0
+  output DP-2
   #status_command i3status
   tray_output primary
   font xft:Iosevka:style=Regular 12
@@ -203,7 +203,7 @@ bar {
 bar {
   id bar-0
   output primary
-  output DP1
+  output DP-0
   status_command i3status
   #status_command i3status -c ~/.config/i3status/config
   tray_output primary
