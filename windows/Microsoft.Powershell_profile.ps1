@@ -52,5 +52,14 @@ prepend_path("$TOOLS_PATH/fzf")
 #? bat
 prepend_path("$TOOLS_PATH/bat")
 
+#? Code (Insiders)
+prepend_path("$HOME/AppData/Local/Programs/Microsoft VS Code Insiders/bin")
+
+# Re-source in case new aliases can be installed.
+#------------------------------------------------------------------------------
+. $PSScriptRoot/aliases.ps1
+. $PSScriptRoot/functions.ps1
+
+
 # Install and import modules
 setup-modules

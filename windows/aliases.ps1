@@ -1,7 +1,6 @@
-if(
-  Get-Command code-insiders -errorAction SilentlyContinue
-)
-{
+if (
+  Get-Command code-insiders.cmd -errorAction SilentlyContinue
+) {
   Set-Alias -Name code -Value code-insiders.cmd
 }
 
