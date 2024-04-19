@@ -4,7 +4,7 @@ script_directory=$(dirname -- "$0")
 echo $'Linking .Xresources to $HOME/.Xresources\n'
 ln -sf $script_directory/.Xresources $HOME/.Xresources
 
-echo $'Copying .xinitrc to $HOME/.xinitrc\n'
+echo $'Linking .xinitrc to $HOME/.xinitrc\n'
 ln -sf $script_directory/.xinitrc $HOME/.xinitrc
 
 if ! [ -d "$HOME/.screenlayout" ];
@@ -19,3 +19,5 @@ ln -sf $script_directory/screen_layout_default.sh $HOME/.screenlayout/screen_lay
 echo $'Linking .xprofile to $HOME/.xprofile\n'
 ln -sf $script_directory/.xprofile $HOME/.xprofile
 
+echo $'Linking xorg.conf to $HOME/.xprofile\n'
+ln -sf $script_directory/xorg.conf /etc/X11/xorg.conf
