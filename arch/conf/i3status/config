@@ -10,7 +10,7 @@ tztime local {
 
 order += "memory" 
 memory {  
-  format = "RAM: %used" 
+  format = "RAM: %used / %available (%total)"
   threshold_degraded = "10%"   
   format_degraded = "MEMORY: %free" 
 } 
@@ -18,14 +18,20 @@ memory {
 order += "cpu_temperature 0" 
 cpu_temperature 0 {  
   format = "CPU: %degrees °C"     
-  path = "/sys/bus/acpi/devices/LNXTHERM\:00/thermal_zone/temp" 
+  path = "/sys/class/thermal/thermal_zone0/temp" 
 } 
-
 
 order += "ethernet enp14s0" 
 ethernet enp14s0 { 
   format_up = "Ethernet: %ip (%speed)"
-  format_down = "Ethernet: down"
+  format_down = "Ethernet: disconnect"
+}
+
+order += "wireless wlp15s0" 
+wireless wlp15s0 { 
+  format_up = "%essid: (%bitrate / %frequency) %ip"
+  format_down = "W: down"
+#  format_quality: "%03d%s"
 }
 
 order += "load" 
@@ -33,8 +39,17 @@ load {
   format = "%5min"
 }
 
-order += "read_file uptime"
-read_file uptime {
+order += "read_file Uptime"
+read_file Uptime {
   format = "%title: %content"
   path = "/home/prosdkr/.config/i3status/uptime" 
+}
+
+order += "volume master"
+volume master {
+  format = "♪ (%devicename): %volume"
+  format_muted = "♪ (%devicename): 0%%"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
 }
