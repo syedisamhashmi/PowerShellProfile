@@ -1,3 +1,5 @@
+# Deprecated in favor of init style.
+
 # Housekeeping
 #------------------------------------------------------------------------------
 #? Wherever projects are stored.
@@ -43,6 +45,9 @@ prepend_path("nvm")
 #? For access to bins in npm
 #prepend_path("$HOME/AppData/Roaming/npm")
 
+#? AZ
+prepend_path("$TOOLS_PATH/az")
+
 #? Ripgrep
 prepend_path("$TOOLS_PATH/ripgrep")
 
@@ -63,3 +68,23 @@ prepend_path("$HOME/AppData/Local/Programs/Microsoft VS Code Insiders/bin")
 
 # Install and import modules
 setup-modules
+
+# Ignore history commands getting stored that are just noise.
+Set-PSReadLineOption -AddToHistoryHandler {
+  param($command)
+  if (
+    $false -and 
+    (
+      $command -like 'cd [~|.\|./|../|..\|..|..\]*' -or
+      $command -like 'mkdir *' -or
+      $command -like 'ls *' -or
+      $command -like 'dotnet [build|restore|clean]' -or
+      $command -like 'history|history-open' -or
+      $command -like 'echo *' -or
+      $command -like 'cat *'
+    )
+  ) {
+      return $false
+  }
+  return $true
+} 

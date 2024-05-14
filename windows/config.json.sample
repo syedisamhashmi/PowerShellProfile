@@ -1,0 +1,9 @@
+{
+  "UserPreferences": {
+    "AutoUpdates": null
+  },
+  "AutoUpdate": {
+    "LastChecked": null,
+    "CheckPeriod": "daily",
+  }
+}

@@ -23,7 +23,7 @@ while true; do
       exit 0;;
 
     [Aa]* ) 
-      export BASH_FILE_OVERRIDE='.zshrc'
+      export BASH_FILE_OVERRIDE='$HOME/.zshrc'
       echo "Overriding bash file to '$BASH_FILE_OVERRIDE'"
 
       echo "Calling arch/init.sh..."

@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-if [ -n $BASH_FILE_OVERRIDE ];
+if [ -n "$BASH_FILE_OVERRIDE" ];
 then
   echo "Bash file override found: $BASH_FILE_OVERRIDE"
   BASH_FILE=$BASH_FILE_OVERRIDE
 else
-  BASH_FILE='.bashrc'
+  BASH_FILE="$HOME/.bashrc"
 fi
 
 if [[ -z $PROFILE ]]; 
 then
-  export PROFILE="$HOME/$BASH_FILE"
+  export PROFILE="$BASH_FILE"
   echo "\$PROFILE unset, setting to: '$PROFILE'"
 fi
 
