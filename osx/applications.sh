@@ -4,8 +4,11 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Add dotnet.
+# Migrated
 export PATH="$HOME/.dotnet:$PATH"
+# Migrated
 export PATH="$HOME/.dotnet/tools:$PATH"
+# Migrated
 export DOTNET_ROOT="$HOME/.dotnet"
 
 # Add kubernetes, todo: hardcoded version....

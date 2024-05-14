@@ -1,4 +1,9 @@
-#!/usr/bin/zsh
+#!/usr/bin/env bash
+
+# The entire osx folder is/will/should be deprecated
+# In favord of the `arch` folder since osx and linux both have
+# Respectable access to bash. check the init script here.
+# Consider this your only warning and get out of this unmaintained code now.
 
 # ACTION NECESSARY - Set path to repo containing my dotfiles.
 export REPO_PATH="$HOME/vs/dotfiles";

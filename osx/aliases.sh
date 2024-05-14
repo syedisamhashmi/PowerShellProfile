@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # USAGE - type `profile` to open zshrc profile in VS Code
+# Migrated
 alias profile='code ~/vs/dotfiles'
 
 # USAGE - type `tabname ["desired_name"]` to set the terminal tab's name
@@ -29,7 +30,9 @@ alias testReport='dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=lc
 alias sonar=osx_sonar;
 
 # USAGE - `cat` to cat a file using `bat`
+# Migrated
 alias cat='bat'
 
 # USAGE - `grep` to grep a file with color
+# Migrated
 alias grep="grep --color=always"

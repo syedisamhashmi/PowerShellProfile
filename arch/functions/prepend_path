@@ -1,0 +1,12 @@
+#/usr/bin/env bash
+
+path_to_add=$1
+
+if [[ -n "$path_to_add" && -d $path_to_add ]];
+then
+  [ $ISAMBASH_VERBOSE_ENABLED -eq 1 ] && echo "Found path, appending $path_to_add"
+  path_old=$PATH;
+  export PATH="$path_to_add:$path_old";
+else
+  [ $ISAMBASH_VERBOSE_ENABLED -eq 1 ] && echo "Cannot append path... MISSING: \"$path_to_add\""
+fi

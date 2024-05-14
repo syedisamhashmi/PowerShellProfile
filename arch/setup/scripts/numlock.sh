@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 
 echo "Creating /usr/local/bin/numlock"
 sudo sh -c "echo '#!/bin/bash

@@ -1,7 +1,15 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
+if [ -n $BASH_FILE_OVERRIDE ];
+then
+  echo "Bash file override found: $BASH_FILE_OVERRIDE"
+  BASH_FILE=$BASH_FILE_OVERRIDE
+else
+  BASH_FILE='.bashrc'
+fi
 
-if [[ -z $PROFILE ]]; then
-  export PROFILE="$HOME/.bashrc"
+if [[ -z $PROFILE ]]; 
+then
+  export PROFILE="$HOME/$BASH_FILE"
   echo "\$PROFILE unset, setting to: '$PROFILE'"
 fi
 
@@ -22,9 +30,17 @@ else
   echo "Initializing..."
 
   SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+  
   echo $init_marker >> $PROFILE
+
+  if [ -n $BASH_FILE_OVERRIDE ];
+  then
+    echo "Adding override..."
+    echo "export BASH_FILE_OVERRIDE=$BASH_FILE_OVERRIDE" >> $PROFILE
+    echo >> $PROFILE
+  fi
   echo "export ISAMBASH_INIT_POINT=$SCRIPT_DIR/.bashrc" >> $PROFILE
-  echo "source \$ISAMBASH_INIT_POINT" >> $PROFILE
+  echo "source \$ISAMBASH_INIT_POINT " >> $PROFILE
   echo "" >> $PROFILE
   echo "Initialized..."
 fi

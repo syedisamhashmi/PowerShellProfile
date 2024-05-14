@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 conf_path=/etc/systemd
 conf_fname=journald.conf

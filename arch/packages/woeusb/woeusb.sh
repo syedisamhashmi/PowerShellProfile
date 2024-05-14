@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 pushd $repos_dir_default
 rm -rfd $repos_dir_default/woeusb

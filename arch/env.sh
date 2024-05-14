@@ -1,9 +1,9 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
-# .bashrc location
-export bashrc=$HOME/.bashrc
-export PROFILE=$HOME/.bashrc
+# .bashrc / .zshrc file location
+export PROFILE="$HOME/$BASH_FILE"
 
 # Default editor
 export EDITOR=/usr/bin/vim
 
+export BAT_PAGER=
