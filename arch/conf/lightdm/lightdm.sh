@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-script_directory=$(dirname -- "$0")
+script_directory=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 echo "Linking lightdm.conf to /etc/lightdm/lightdm.conf"
 sudo ln -s -f $script_directory/lightdm.conf  /etc/lightdm/lightdm.conf

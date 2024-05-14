@@ -10,12 +10,16 @@ sudo pacman -S                \
   extra/bluez                 \
   extra/bluez-utils           \
   extra/neofetch              \
+  extra/noto-fonts-emoji      \ # For emojis
+  extra/piper                 \ # For mouse button mappings
   extra/pulseaudio            \
   extra/pulsemixer            \
   extra/python-build          \
   extra/python-installer      \
   extra/python-pyusb          \
   extra/python-wheel          \
+  extra/ranger                \
+  extra/ripgrep               \
   extra/scrot                 \
   extra/slop                  \
   extra/tree                  \

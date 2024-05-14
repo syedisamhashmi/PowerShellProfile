@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-script_directory=$(dirname -- "$0")
+script_directory=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 echo "Copying config to $HOME/.config/i3status/config"
 mkdir -p $HOME/.config/i3status

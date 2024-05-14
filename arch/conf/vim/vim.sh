@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-script_directory=$(dirname -- "$0")
+script_directory=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 echo "Linking .vimrc to $HOME/.vimrc"
 ln -s -f $script_directory/.vimrc $HOME/.vimrc

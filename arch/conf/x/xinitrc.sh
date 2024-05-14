@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-script_directory=$(dirname -- "$0")
+script_directory=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 echo $'Linking .Xresources to $HOME/.Xresources\n'
 ln -sf $script_directory/.Xresources $HOME/.Xresources

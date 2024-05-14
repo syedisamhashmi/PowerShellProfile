@@ -37,5 +37,7 @@ set background=dark
 " Mouse - Use scrollback with mouse scroll
 set mouse=a
 
-packadd nerd_tree
-
+silent! packadd nerd_tree
+if exists(':NERDTree')
+  map <F1> :NERDTreeToggle<CR>
+endif

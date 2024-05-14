@@ -47,9 +47,23 @@ read_file Uptime {
 
 order += "volume master"
 volume master {
-  format = "♪ (%devicename): %volume"
-  format_muted = "♪ (%devicename): 0%%"
+  format = "  (%devicename): %volume"
+
+  format_muted = " (%devicename): 0%%"
   device = "default"
   mixer = "Master"
   mixer_idx = 0
+}
+
+order += "path_exists VPN"
+path_exists VPN {
+  path = "/proc/sys/net/ipv4/conf/wg0-mullvad/"
+  #format_up = "%title CONNECTED"
+  format = " %title CONNECTED"
+  format_down = " %title DISCONNECTED"
+}
+
+order += "bandwidth bandwidth"
+bandwidth bandwidth {
+  
 }

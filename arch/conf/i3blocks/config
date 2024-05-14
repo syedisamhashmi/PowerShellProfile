@@ -1,0 +1,174 @@
+# i3blocks config file
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+# Change $SCRIPT_DIR to the location of your scripts!
+command=$HOME/.config/i3blocks/$BLOCK_NAME/$BLOCK_NAME
+#command=$SCRIPT_DIR/$BLOCK_NAME
+#command=/usr/bin/i3blocks/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+
+# Date Time
+#
+[time]
+command=date '+%Y-%m-%d %H:%M:%S'
+interval=1
+
+# Memory usage
+#
+# The type defaults to "mem" if the instance is not specified.
+[memory2]
+label= 
+interval=persist
+bar_size=20
+critical=50
+warning=20
+color_critical=#d9534f
+markup=pango
+bar_chars=_▁▂▃▄▅▆▇█
+
+# Volume indicator
+[volume-pulseaudio]
+#label=♪
+#label=VOL
+LONG_FORMAT="${SYMB} ${VOL}% [${INDEX}:${NAME}]"
+interval=persist
+DEFAULT_COLOR="#ffffff"
+MUTED_COLOR="#a0a0a0"
+USE_ALSA_NAME=1
+SUBSCRIBE=1
+
+# Disk usage
+#
+# The directory defaults to $HOME if the instance is not specified.
+# The script may be called with a optional argument to set the alert
+# (defaults to 10 for 10%).
+#[disk]
+#label=HOME
+#DIR=/mnt/data
+#interval=30
+
+# Network interface monitoring
+#
+# If the instance is not specified, use the interface used for default route.
+# The address can be forced to IPv4 or IPv6 with -4 or -6 switches.
+[iface]
+IFACE=enp14s0
+LABEL=enp14s0: 
+color=#00FF00
+ADDRESS_FAMILY=inet
+interval=10
+separator=false
+#display_wifi_name=1
+
+[iface]
+IFACE=wlp15s0
+LABEL=wlp15s0: 
+color=#00FF00
+ADDRESS_FAMILY=inet
+interval=10
+separator=false
+#display_wifi_name=1
+
+[iface]
+IFACE=wg0-mullvad
+LABEL=wg0-mullvad:
+color=#00FF00
+ADDRESS_FAMILY=inet
+interval=10
+separator=false
+#display_wifi_name=1
+
+
+[wifi]
+INTERFACE=wlp15s0
+label=
+interval=10
+separator=true
+
+
+#[mediaplayer]
+# This picks any player, with vlc as first, and spotify as last choice
+#instance=vlc,%any,spotify
+#interval=5
+#signal=10
+
+[bandwidth2]
+interval=persist
+markup=pango
+LABEL=
+
+[temperature]
+label=CPU 
+interval=10
+separator=false
+
+[load_average]
+falsepick (Requires playerctl >=2.1.1)
+separator=false
+
+[gpu-load]
+label=GPU 
+interval=5
+#min_width=GPU 100% 100% 100% 100%
+GPU_BRAND=NVIDIA
+T_WARN=70
+T_CRIT=90
+
+# Key indicators
+[keyindicator]
+KEY=CAPS
+HIDE_WHEN_OFF=0
+markup=pango
+interval=once
+signal=11
+
+[keyindicator]
+KEY=NUM
+markup=pango
+HIDE_WHEN_OFF=0
+interval=once
+signal=11
+
+# Guess the weather hourly
+[weather]
+command=curl -Ss 'https://wttr.in/fort-worth?0&T&Q' | cut -c 16- | head -2 | xargs echo
+interval=450
+color=#A4C2F4
+
+[toggle]
+#command=/home/prosdkr/i3blocks/vpn/vpn
+interval=2
+label=" VPN "
+COMMAND_ON=mullvad connect 
+#& kill i3blocks
+COMMAND_OFF=mullvad disconnect
+#& kill i3blocks
+#COMMAND_STATUS=test -d /proc/sys/net/ipv4/conf/wg0-mullvad
+COMMAND_STATUS=mullvad status | grep "Connected"
+COLOR_ON=#00ff00
+COLOR_OFF=#ff0000

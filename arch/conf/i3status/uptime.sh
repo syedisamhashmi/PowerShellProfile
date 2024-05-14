@@ -1,3 +1,3 @@
 #!/bin/sh 
 
-echo "$(uptime -p)" > /home/prosdkr/.config/i3status/uptime
+echo "$(uptime -p)" > $HOME/.config/i3status/uptime

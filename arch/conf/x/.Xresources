@@ -1,7 +1,7 @@
 Xft.dpi: 92
 
-*.background: #000000
-*.foreground: #00ff40 
+#*.background: #000000
+#*.foreground: #00ff40 
 
 *.font: xft:Iosevka:style=Regular:size=20
 *faceName: xft:Iosevka:style=Regular:size=20
@@ -15,6 +15,8 @@ URxvt.lineSpace: 0
 URxvt.geometry: 150x60
 URxvt.cursorBlink: true
 URxvt.cursorUnderline: false
-URxvt.url-launcher: firefox
+URxvt.url-launcher: chromium 
 URxvt.matcher.button: 1
 URxvt.keysym.M-u: perl:matcher:select
+URxvt.iso14755: false
+URxvt.iso14755_52: false
