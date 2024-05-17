@@ -50,10 +50,6 @@ function grep {
   }
 }
 
-function history-open()
-{
-  code (Get-PSReadlineOption).HistorySavePath
-} 
 
 #------------------------------------------------------------------------------
 # function git-make-pull-request ($target, $description) {

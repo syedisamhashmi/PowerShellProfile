@@ -1,15 +1,47 @@
 {
+  "[html]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp",
     "editor.codeActionsOnSave": {
-      "source.fixAll": false,
-      "source.organizeImports": true,
-      "source.sortMembers": true,
-      "source.removeUnusedImports": true
+      "source.fixAll": "never",
+      "source.organizeImports": "explicit",
+      "source.sortMembers": "explicit",
+      "source.removeUnusedImports": "explicit"
     }
   },
   "[markdown]": {
     "editor.wordWrap": "off"
   },
-  "dotnet.automaticallyCreateSolutionInWorkspace": false
+
+  "files.trimTrailingWhitespace": true,
+
+  "dotnet.automaticallyCreateSolutionInWorkspace": false,
+
+  "workbench.colorTheme": "Default Dark Modern",
+  "editor.tabSize": 2,
+  "workbench.settings.applyToAllProfiles": ["editor.tabSize"],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "true"
+  },
+
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  "terminal.integrated.commandsToSkipShell": ["-workbench.action.showCommands"],
+  "terminal.integrated.allowChords": false
 }

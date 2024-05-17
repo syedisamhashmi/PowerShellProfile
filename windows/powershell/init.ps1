@@ -1,8 +1,11 @@
-. $PSScriptRoot/functions/create_config.ps1;
-
-. $PSScriptRoot/aliases.ps1
+$EDITOR="vim"
 
 $powershell_path = "$PSScriptRoot".Replace("\", "/");
+
+. $powershell_path/functions/create_config.ps1;
+
+. $powershell_path/aliases.ps1
+
 $powershell_functions_path = "$powershell_path/functions";
 $powershell_scripts_path = "$powershell_path/scripts";
 

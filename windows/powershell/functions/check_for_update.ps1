@@ -10,7 +10,7 @@ $autoUpdateChoices = @(
 Push-Location $PSScriptRoot
 $gitRepoDir = git rev-parse --show-toplevel
 
-$config = Get-Content -Path "$gitRepoDir/config.json" | ConvertFrom-Json
+$config = Get-Content -Path "$gitRepoDir/windows/config.json" | ConvertFrom-Json
 if (
   $config.AutoUpdate.CheckPeriod -ne "session" -and
   $config.AutoUpdate.LastChecked -ne $null
@@ -78,6 +78,6 @@ if ($isBehind) {
 }
 
 $config.AutoUpdate.LastChecked = Get-Date
-$config | ConvertTo-Json | Out-File -FilePath "$gitRepoDir/config.json"
+$config | ConvertTo-Json | Out-File -FilePath "$gitRepoDir/windows/config.json"
 
 Pop-Location

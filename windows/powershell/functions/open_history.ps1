@@ -1,0 +1,1 @@
+Start-Process -FilePath $EDITOR -ArgumentList (Get-PSReadlineOption).HistorySavePath

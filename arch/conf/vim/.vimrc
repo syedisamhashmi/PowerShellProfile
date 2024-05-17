@@ -5,7 +5,7 @@ set smartindent
 set autoindent
 
 " To copy to system clipboard
-set clipboard=unnamedplus
+set clipboard=unnamed,unnamedplus
 
 " Display a line under the current line.
 set cursorline
