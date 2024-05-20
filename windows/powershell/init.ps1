@@ -4,8 +4,6 @@ $powershell_path = "$PSScriptRoot".Replace("\", "/");
 
 . $powershell_path/functions/create_config.ps1;
 
-. $powershell_path/aliases.ps1
-
 $powershell_functions_path = "$powershell_path/functions";
 $powershell_scripts_path = "$powershell_path/scripts";
 
@@ -18,6 +16,8 @@ prepend_path "$powershell_scripts_path"
 
 
 # TODO: Setup config for 1. ShouldAutoHome, 2. HomeLocation
+
+$PROJECT_ROOT = "c:/vs";
 if (
   ((Get-Location).tostring() -eq 'C:\WINDOWS\system32') -or
   ((Get-Location).tostring() -eq $HOME)
@@ -48,5 +48,7 @@ prepend_path "$HOME/AppData/Local/Programs/Microsoft VS Code Insiders/bin"
 
 install_package("posh-git")
 install_package("z")
+
+. $powershell_path/aliases.ps1
 
 . check_for_update
