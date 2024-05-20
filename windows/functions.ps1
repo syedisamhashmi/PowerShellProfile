@@ -13,7 +13,7 @@ function profile() {
 #------------------------------------------------------------------------------
 # Helper function to kill all chrome and re-run it with debug port enabled.
 #? Where Chrome is installed
-$CHROME_LOCATION = ""      
+$CHROME_LOCATION = ""
 function kill-chrome-re-run-with-debug {
   foreach ($id in (ps | Where ProcessName -eq chrome | Select Id)) {
     Stop-Process -Id $id.Id
@@ -41,11 +41,12 @@ function install-package($package) {
 
 function grep {
   $externalGrep = Get-Command -Type Application grep
-  if ($MyInvocation.ExpectingInput) { 
+  if ($MyInvocation.ExpectingInput) {
     # pipeline (stdin) input present
     # $args passes all arguments through.
     $input | & $externalGrep --color $args
-  } else {
+  }
+  else {
     & $externalGrep --color $args
   }
 }
@@ -54,8 +55,8 @@ function grep {
 #------------------------------------------------------------------------------
 # function git-make-pull-request ($target, $description) {
 #   # Finalize target branch selection if not specified
-#   if ($target) { 
-#     $branch = $target 
+#   if ($target) {
+#     $branch = $target
 #   }
 #   else {
 #     $branch = git for-each-ref refs/remotes/origin/* --format='%(refname:short)' `
@@ -65,12 +66,12 @@ function grep {
 #   }
 #   Write-Output "Making PR to: $branch"
 
-#   # If there is a description override, don't use template content or git log. 
+#   # If there is a description override, don't use template content or git log.
 #   if (-not $description) {
 #     # Fetch repo path from git to get template-content, if present
 #     $repo_path = git rev-parse --show-toplevel
 #     $template_path = "$repo_path/docs/pull_request_template.md"
-#     $template_content = "" 
+#     $template_content = ""
 #     $template_exists = Test-Path $template_path -PathType Leaf
 #     if ($template_exists) {
 #       $template_content = Get-Content -Path $template_path -Raw
