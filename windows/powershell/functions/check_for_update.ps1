@@ -36,6 +36,7 @@ if (
   }
 }
 
+Push-Location $tools_repo_path
 # Fetch updates on main
 (git fetch origin main -q -n -k --depth 1) 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
 # Check if status says we are behind on commits
@@ -83,3 +84,4 @@ if ($isBehind) {
 
 $config.AutoUpdate.LastChecked = Get-Date
 $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
+Pop-Location
