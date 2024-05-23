@@ -1,5 +1,6 @@
 [CmdletBinding()]
-
+param (
+)
 $autoUpdateTitle = "Automatic Updates"
 $autoUpdateDescription = "You have not opted in/out of automatic updates.`nWould you like to always attempt auto updates when available?"
 $autoUpdateChoices = @(
@@ -7,10 +8,7 @@ $autoUpdateChoices = @(
   [System.Management.Automation.Host.ChoiceDescription]::new("&NO", "Ignore automatic updates, I will handle them myself.")
 )
 
-Push-Location $PSScriptRoot
-$gitRepoDir = git rev-parse --show-toplevel
-
-$config = Get-Content -Path "$gitRepoDir/windows/config.json" | ConvertFrom-Json
+$config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
 if (
   $config.AutoUpdate.CheckPeriod -ne "session" -and
   $config.AutoUpdate.LastChecked -ne $null
@@ -37,39 +35,41 @@ if (
 # Fetch updates on main
 (git fetch origin main -q -n -k --depth 1) 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
 # Check if status says we are behind on commits
-$isBehind = (git status) -match "behind|diverged" 
+$isBehind = (git status) -match "behind|diverged"
 
 if ($isBehind) {
   Write-Host " ╔══════════════════════════════════════════════╗ $($PSStyle.Reset)" -BackgroundColor White -ForegroundColor Black
   Write-Host " ║ Update is available for your developer tools ║ $($PSStyle.Reset)" -BackgroundColor White -ForegroundColor Black
   Write-Host " ╚══════════════════════════════════════════════╝ $($PSStyle.Reset)" -BackgroundColor White -ForegroundColor Black
 
-  CreateRepoConfig >$null
-  
+  create_config.ps1 >$null
+
   if ($config.UserPreferences.AutoUpdates -eq $null) {
     Write-Host " ══════════════════════════════════════════════   $($PSStyle.Reset)" -BackgroundColor White -ForegroundColor Black
     $decision = $Host.UI.PromptForChoice($autoUpdateTitle, $autoUpdateDescription, $autoUpdateChoices, -1)
     if ($decision -eq 0) {
       $config.UserPreferences.AutoUpdates = $True
-      $config | ConvertTo-Json | Out-File -FilePath "$gitRepoDir/config.json"
+      $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
     }
     if ($decision -eq 1) {
       $config.UserPreferences.AutoUpdates = $False
-      $config | ConvertTo-Json | Out-File -FilePath "$gitRepoDir/config.json"
+      $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
     }
   }
 
   if ($config.UserPreferences.AutoUpdates -eq $True) {
     Write-Host "Attempting update..."
-    
-    # # Ignore all output from all streams
-    (git checkout main) 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
-    (git pull) 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
-    
+
+    # Ignore all output from all streams
+    git checkout -b test 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
+    git branch -D main 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
+    git checkout main 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
+    git branch -D test 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
+
     # # Check if status says we are behind on commits
     $isBehind = (git status) -match "behind"
     if ($isBehind) {
-      Write-Host "Update FAILED... Please reconcile '$gitRepoDir' manually"
+      Write-Host "Update FAILED... Please reconcile '$tools_repo_path' manually"
     }
     else {
       Write-Host "Update complete. Please open a new PowerShell."
@@ -78,6 +78,4 @@ if ($isBehind) {
 }
 
 $config.AutoUpdate.LastChecked = Get-Date
-$config | ConvertTo-Json | Out-File -FilePath "$gitRepoDir/windows/config.json"
-
-Pop-Location
+$config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
