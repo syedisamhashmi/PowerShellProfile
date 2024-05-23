@@ -8,6 +8,10 @@ $autoUpdateChoices = @(
   [System.Management.Automation.Host.ChoiceDescription]::new("&NO", "Ignore automatic updates, I will handle them myself.")
 )
 
+if ($tools_repo_path -eq $null) {
+  $tools_repo_path = "$PSScriptRoot/../..";
+}
+
 $config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
 if (
   $config.AutoUpdate.CheckPeriod -ne "session" -and

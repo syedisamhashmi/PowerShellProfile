@@ -1,7 +1,7 @@
 #--------------------------------------------------------------------------------------------------------
 # README
 #
-# Description: 
+# Description:
 #   Loads a `.env` file into the current powershell session.
 #
 # Parameters:
@@ -9,7 +9,7 @@
 #
 # Run example:
 #  PS C:\vs\EDHC> load_env --directory ./directory
-#  PS C:\vs\EDHC> load_env 
+#  PS C:\vs\EDHC> load_env
 #
 #--------------------------------------------------------------------------------------------------------
 
@@ -20,36 +20,38 @@ param(
   [switch]$writeError
 )
 
-if (-not (test-path "$dir/.env") )
-{
+if (-not (test-path "$dir/.env") ) {
   if ($writeError) {
-    Write-Error "no .env file found in the current directory"
+    Write-Warning "no .env file found in the current directory"
   }
   return
 }
 
-$lines = "" 
-if ($secure) { 
-  $lines = (unprotect .env).Split("`n") 
-} else { 
-  $lines = Get-Content .env 
+$lines = ""
+if ($secure) {
+  $lines = (unprotect .env).Split("`n")
+}
+else {
+  $lines = Get-Content .env
 }
 
 $lines | ForEach-Object {
-  if ($_.StartsWith('#'))
-  {
+  if ($_.StartsWith('#')) {
     $skipped = $_.Substring(1)
     Write-Debug "skipping '$skipped'"
-    continue
+
+  }
+  else {
+    $index = $_.IndexOf("=");
+    if ($index -ge 0) {
+      $key = $_.Substring(0, $index);
+      $val = $_.Substring($index + 1);
+      [environment]::SetEnvironmentVariable(
+        $key,
+        $val.Trim('"')
+      );
+      Write-Debug "$key set to $val"
+    }
   }
 
-  $index = $_.IndexOf("=");
-  $key = $_.Substring(0, $index);
-  $val = $_.Substring($idx + 1);
-  [environment]::SetEnvironmentVariable(
-    $key, 
-    $val.Trim(), 
-    "Process"
-  );
-  "$key set"
 }
