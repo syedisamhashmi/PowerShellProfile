@@ -23,7 +23,6 @@ if (
     # if now is before 24 from the time we checked, do nothing.
     $now -lt ([DateTime]$config.AutoUpdate.LastChecked).AddHours(24)
   ) {
-    Pop-Location
     return
   }
   if (
@@ -31,7 +30,6 @@ if (
     # if now is before 7 days from the time we checked, do nothing.
     $now -lt ([DateTime]$config.AutoUpdate.LastChecked).AddDays(7)
   ) {
-    Pop-Location
     return
   }
 }
