@@ -1,6 +1,7 @@
 {
   "UserPreferences": {
-    "AutoUpdates": null
+    "AutoUpdates": null,
+    "ToolsPath": null,
   },
   "AutoUpdate": {
     "LastChecked": null,
