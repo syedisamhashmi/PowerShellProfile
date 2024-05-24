@@ -125,3 +125,57 @@ else {
   }
 }
 
+# Add git to path.
+$GIT_PATH = where.exe git
+$GIT_DIR = $GIT_PATH | Split-Path -Parent | Split-Path -Parent
+#? add the usr/bin tools to the path.
+prepend_path($GIT_DIR + "/usr/bin")
+
+
+#? Add NVM.
+prepend_path "$tools_install_path/nvm"
+$nvmInstalled = Get-Command nvm -errorAction SilentlyContinue
+if (-not $forceInstall -and $nvmInstalled) {
+  Write-Debug "nvm installed, nice!"
+}
+else {
+  $toolInstallTitle = "Install ``nvm`` to your tools?"
+  $toolInstallDescription = "You have not installed nvm. This is necessary for certain tools. Install it?"
+  $toolInstallDefaultChoices = @(
+    [System.Management.Automation.Host.ChoiceDescription]::new("&YES", "Install nvm")
+    [System.Management.Automation.Host.ChoiceDescription]::new("&NO", "I will accept responibility for installing it on my own...")
+  )
+  $toolInstallDecision = $Host.UI.PromptForChoice(
+    $toolInstallTitle,
+    $toolInstallDescription,
+    $toolInstallDefaultChoices,
+    -1
+  )
+  # They are cool with me installing it.
+  if ($toolInstallDecision -eq 0) {
+    Invoke-WebRequest -Uri https://github.com/coreybutler/nvm-windows/releases/download/1.1.12/nvm-noinstall.zip -OutFile "$tools_install_path/nvm.zip"
+    Expand-Archive -Force -Path "$tools_install_path/nvm.zip" -DestinationPath "$tools_install_path/nvm"
+    Remove-Item -Path "$tools_install_path/nvm.zip"
+    Copy-Item "$tools_repo_path/powershell/scripts/use-node.ps1" -Destination "$tools_install_path/nvm"
+    Copy-Item "$tools_repo_path/powershell/scripts/settings.txt" -Destination "$tools_install_path/nvm"
+  }
+}
+prepend_path "$tools_install_path/nvm"
+$nvmInstalled = Get-Command nvm -errorAction SilentlyContinue
+if ($nvmInstalled) {
+  . c:\tools\nvm\use-node.ps1
+}
+if (
+  $nvmInstalled -and
+  (Get-ChildItem -Path "$tools_install_path/nvm" | Where-Object {$_ -match "nodejs"} | Where-Object { Test-Path -Path $_ -PathType Container }).Count -eq 0
+) {
+  (Get-ChildItem -Path "$tools_install_path/nvm")
+  use-node 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
+}
+if (
+  $nvmInstalled -and
+  (Get-ChildItem -Path "$tools_install_path/nvm" | Where-Object {Test-Path -Path $_ -PathType Container } | Where-Object {$_.Name -match "^v" }).Count -eq 0
+) {
+  Write-Output "Reminder: You need to install a version of node!"
+  Write-Output "Reminder: Run something like ``nvm install 16.20.2; use-node v16.20.2;``"
+}

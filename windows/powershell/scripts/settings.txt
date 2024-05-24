@@ -1,0 +1,9 @@
+
+path: C:\tools\nvm\
+root: C:\tools\nvm
+arch: 64
+proxy: none
+originalpath: 
+originalversion: 
+node_mirror: 
+npm_mirror: 
