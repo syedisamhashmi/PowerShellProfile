@@ -8,8 +8,8 @@
 #   Directory: A directory override to use, otherwise defaults to current directory.
 #
 # Run example:
-#  PS C:\vs\EDHC> load_env --directory ./directory
-#  PS C:\vs\EDHC> load_env
+#  PS C:\vs> load_env --directory ./directory
+#  PS C:\vs> load_env
 #
 #--------------------------------------------------------------------------------------------------------
 

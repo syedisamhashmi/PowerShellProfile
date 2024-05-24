@@ -24,3 +24,6 @@ set-alias history open_history.ps1
 set-alias profile open_profile.ps1
 
 set-alias grep color_grep.ps1
+
+set-alias use_az_account use_az_account.ps1
+set-alias use-az-account use_az_account.ps1
