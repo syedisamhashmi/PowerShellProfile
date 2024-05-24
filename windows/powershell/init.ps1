@@ -26,6 +26,8 @@ $powershell_scripts_path = "$powershell_path/scripts";
 
 . $powershell_path/tools.ps1
 
+. $powershell_path/process_config.ps1
+
 prepend_path "$powershell_scripts_path"
 
 . $powershell_path/aliases.ps1

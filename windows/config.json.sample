@@ -1,7 +1,9 @@
 {
   "UserPreferences": {
     "AutoUpdates": null,
-    "ToolsPath": null
+    "ToolsPath": null,
+    "ShouldAutoHome": null,
+    "AutoHomeDirectory": null,
   },
   "AutoUpdate": {
     "LastChecked": null,

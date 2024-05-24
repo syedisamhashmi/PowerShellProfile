@@ -1,16 +1,6 @@
 $EDITOR = "vim"
 $PROJECT_ROOT = "c:/vs";
 
-# TODO: Setup config for 1. ShouldAutoHome, 2. HomeLocation
-if (
-  ((Get-Location).tostring() -eq 'C:\WINDOWS\system32') -or
-  ((Get-Location).tostring() -eq $HOME)
-) {
-  cd $PROJECT_ROOT;
-}
-
-
-
 
 #? GIT
 $GIT_PATH = where.exe git
