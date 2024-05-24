@@ -28,6 +28,9 @@ if ($config.UserPreferences.ToolsPath -eq $null) {
   # They are cool with default tools path, great.
   if ($decision -eq 0) {
     Add-Member -Force -InputObject $config.UserPreferences -NotePropertyName ToolsPath -NotePropertyValue "c:/tools"
+    if (-not (Test-Path -PathType Container -Path "c:/tools") ) {
+      New-Item -ItemType Directory -Path "c:/tools"
+    }
     $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
   }
   # Ask for a path and test it.
@@ -62,6 +65,9 @@ else {
 
 $config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
 $tools_install_path = $config.UserPreferences.ToolsPath
+if (-not (Test-Path -PathType Container -Path $tools_install_path) ) {
+  New-Item -ItemType Directory -Path $tools_install_path
+}
 
 if (-not (Get-Command fzf -errorAction SilentlyContinue)) {
   . $PSScriptRoot/functions/prepend_path.ps1 "$PSScriptRoot/functions"
