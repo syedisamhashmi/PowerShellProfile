@@ -1,10 +1,10 @@
 {
   "UserPreferences": {
     "AutoUpdates": null,
-    "ToolsPath": null,
+    "ToolsPath": null
   },
   "AutoUpdate": {
     "LastChecked": null,
-    "CheckPeriod": "daily",
+    "CheckPeriod": "daily"
   }
 }

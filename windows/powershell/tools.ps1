@@ -51,10 +51,6 @@ if ($config.UserPreferences.ToolsPath -eq $null) {
 
     $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
   }
-
-
-  $config.AutoUpdate.LastChecked = Get-Date
-  $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
 }
 else {
   Write-Debug "ToolsPath set"
@@ -95,7 +91,7 @@ else {
   )
   # They are cool with me installing it.
   if ($toolInstallDecision -eq 0) {
-    curl -L https://github.com/junegunn/fzf/releases/download/0.52.1/fzf-0.52.1-windows_amd64.zip -o "$tools_install_path/fzf.zip"
+    Invoke-WebRequest -Uri https://github.com/junegunn/fzf/releases/download/0.52.1/fzf-0.52.1-windows_amd64.zip -OutFile "$tools_install_path/fzf.zip"
     Expand-Archive -Force -Path "$tools_install_path/fzf.zip" -DestinationPath "$tools_install_path/fzf"
     Remove-Item -Path "$tools_install_path/fzf.zip"
   }
@@ -123,7 +119,7 @@ else {
   )
   # They are cool with me installing it.
   if ($toolInstallDecision -eq 0) {
-    curl -L https://aka.ms/installazurecliwindowszipx64 -o "$tools_install_path/az.zip"
+    Invoke-WebRequest -Uri https://aka.ms/installazurecliwindowszipx64 -OutFile "$tools_install_path/az.zip"
     Expand-Archive -Force -Path "$tools_install_path/az.zip" -DestinationPath "$tools_install_path/az"
     Remove-Item -Path "$tools_install_path/az.zip"
   }

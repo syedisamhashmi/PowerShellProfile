@@ -14,21 +14,26 @@ if ($tools_repo_path -eq $null) {
 
 $config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
 if (
-  $config.AutoUpdate.CheckPeriod -ne "session" -and
-  $config.AutoUpdate.LastChecked -ne $null
+  $config.AutoUpdate.CheckPeriod -ne "session"
 ) {
   $now = Get-Date
   if (
-    $config.AutoUpdate.CheckPeriod -eq "daily" -and
-    # if now is before 24 from the time we checked, do nothing.
-    $now -lt ([DateTime]$config.AutoUpdate.LastChecked).AddHours(24)
+    $config.AutoUpdate.LastChecked -ne $null -and
+    (
+      $config.AutoUpdate.CheckPeriod -eq "daily" -and
+      # if now is before 24 from the time we checked, do nothing.
+      $now -lt ([DateTime]$config.AutoUpdate.LastChecked).AddHours(24)
+    )
   ) {
     return
   }
   if (
-    $config.AutoUpdate.CheckPeriod -eq "weekly" -and
-    # if now is before 7 days from the time we checked, do nothing.
-    $now -lt ([DateTime]$config.AutoUpdate.LastChecked).AddDays(7)
+    $config.AutoUpdate.LastChecked -ne $null -and
+    (
+      $config.AutoUpdate.CheckPeriod -eq "weekly" -and
+      # if now is before 7 days from the time we checked, do nothing.
+      $now -lt ([DateTime]$config.AutoUpdate.LastChecked).AddDays(7)
+    )
   ) {
     return
   }

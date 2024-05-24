@@ -1,6 +1,10 @@
 [CmdletBinding()]
+param(
+)
 
-$location = $PSScriptRoot
+if ($tools_repo_path -eq $null) {
+  $tools_repo_path = "$PSScriptRoot/../..";
+}
 
 # Create config if non-existent or empty
 if (

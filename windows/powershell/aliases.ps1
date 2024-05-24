@@ -19,7 +19,7 @@ set-alias check_for_update check_for_update.ps1
 
 set-alias ln create_symlink.ps1
 
-set-alias history open_history.ps1
+set-alias open_history open_history.ps1
 
 set-alias profile open_profile.ps1
 
