@@ -4,7 +4,7 @@
 #------------------------------------------------------------------------------
 #? Wherever projects are stored.
 #? Big fan of the pharmacy, you know... CVS *ba dum tss*
-$PROJECT_ROOT = "c:/vs"; 
+$PROJECT_ROOT = "c:/vs";
 $TOOLS_PATH = "c:/tools";
 
 #? To run scripts as needed.
@@ -32,12 +32,6 @@ if (
 #------------------------------------------------------------------------------
 #? For local dotnet install
 prepend_path("$HOME/AppData/local/Microsoft/dotnet")
-
-#? Find git, and go up two dirs to the install location and
-$GIT_PATH = where.exe git
-$GIT_DIR = $GIT_PATH | Split-Path -Parent | Split-Path -Parent
-#? add the usr/bin tools to the path.
-prepend_path($GIT_DIR + "/usr/bin")
 
 #? Add NVM.
 prepend_path("nvm")
@@ -73,7 +67,7 @@ setup-modules
 Set-PSReadLineOption -AddToHistoryHandler {
   param($command)
   if (
-    $false -and 
+    $false -and
     (
       $command -like 'cd [~|.\|./|../|..\|..|..\]*' -or
       $command -like 'mkdir *' -or
@@ -87,4 +81,4 @@ Set-PSReadLineOption -AddToHistoryHandler {
       return $false
   }
   return $true
-} 
+}

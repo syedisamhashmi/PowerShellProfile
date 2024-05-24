@@ -1,22 +1,12 @@
 $EDITOR = "vim"
-$PROJECT_ROOT = "c:/vs";
 
-
-#? GIT
-$GIT_PATH = where.exe git
-$GIT_DIR = $GIT_PATH | Split-Path -Parent | Split-Path -Parent
-prepend_path "$GIT_DIR/usr/bin"
 #? For local dotnet install
 prepend_path "$HOME/AppData/local/Microsoft/dotnet"
 
 # TODO: Setup config for Tools path
 $TOOLS_PATH = "c:/tools";
-#? AZ
-prepend_path "$TOOLS_PATH/az"
 #? Ripgrep
 prepend_path "$TOOLS_PATH/ripgrep"
-#? FuzzyFind
-prepend_path "$TOOLS_PATH/fzf"
 #? bat
 prepend_path "$TOOLS_PATH/bat"
 #? Code (Insiders)
