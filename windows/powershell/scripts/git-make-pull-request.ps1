@@ -1,32 +1,12 @@
 #--------------------------------------------------------------------------------------------------------
 # README
 #
-# Description: 
+# Description:
 #   Formats and creates a properly formatted pull request in Azure DevOps to the specified target branch.
 #
-# Requires installation of fzf: https://github.com/junegunn/fzf
-# 1. Download and install latest release. 
-# 2. Extract zip to desired location. (ex: c:/tools/fzf)
-# 3. Add location to path in your PowerShell profile. 
-# (your profile lives in the location found by running `echo $PROFILE`)
-# ```
-#   $path_old = $env:PATH;
-#   $env:PATH = "c:/tools/fzf;" + $path_old; 
-# ```
-# 
-# Requires installation of Azure CLI: 
-# https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli#install-or-update
-# 1. Go to `ZIP Package`
-# 2. Download the latest zip of Azure CLI.
-# 2. Extract zip to desired location. (ex: c:/tools/az)
-# 3. Add location to path in your PowerShell profile. 
-# (your profile lives in the location found by running `echo $PROFILE`)
-# ```
-#   $path_old = $env:PATH;
-#   $env:PATH = "c:/tools/az;" + $path_old; 
-# ```
+# Requires installation of `tools` from `tools.ps1`
 #
-# Run the init script to have this code made available to you.
+# Run the init script to have this code made available to you as well as have tools set up for you.
 #
 # Run example:
 #  PS C:\vs> mkpr main
@@ -38,8 +18,8 @@ param(
 )
 
 # Finalize target branch selection if not specified
-if ($target) { 
-  $branch = $target 
+if ($target) {
+  $branch = $target
 }
 else {
   $branch = git for-each-ref refs/remotes/origin/** --format='%(refname:short)' `
@@ -49,23 +29,23 @@ else {
 }
 Write-Output "Making PR to: $branch"
 
-# If there is a description override, don't use template content or git log. 
+# If there is a description override, don't use template content or git log.
 if (-not $description) {
   # Fetch repo path from git to get template-content, if present
   $repo_path = git rev-parse --show-toplevel
   $template_path = "$repo_path/docs/pull_request_template.md"
-  $template_content = "" 
+  $template_content = ""
   $template_exists = Test-Path $template_path -PathType Leaf
   if ($template_exists) {
     $template_content = Get-Content -Path $template_path -Raw
     $template_content = $template_content.Split([Environment]::NewLine)
     $template_content = $template_content | ForEach-Object { '"{0}"' -f $_ };
   }
-  
+
   # collect all the commit messages
   $git_log = git log --format='"- %s"' "origin/$branch..HEAD"
   $template_content += $git_log
-} 
+}
 else {
   $template_content = $description
 }

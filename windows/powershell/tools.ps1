@@ -1,5 +1,6 @@
 [CmdletBinding()]
 param(
+  [switch]$forceInstall
 )
 
 if ($tools_repo_path -eq $null) {
@@ -72,10 +73,11 @@ if (-not (Test-Path -PathType Container -Path $tools_install_path) ) {
 if (-not (Get-Command fzf -errorAction SilentlyContinue)) {
   . $PSScriptRoot/functions/prepend_path.ps1 "$PSScriptRoot/functions"
 }
-prepend_path "$tools_install_path/fzf"
 
+# fzf installation
+prepend_path "$tools_install_path/fzf"
 $fzfInstalled = Get-Command fzf -errorAction SilentlyContinue
-if ($fzfInstalled) {
+if (-not $forceInstall -and $fzfInstalled) {
   Write-Debug "fzf installed, nice!"
 }
 else {
@@ -96,6 +98,34 @@ else {
     curl -L https://github.com/junegunn/fzf/releases/download/0.52.1/fzf-0.52.1-windows_amd64.zip -o "$tools_install_path/fzf.zip"
     Expand-Archive -Force -Path "$tools_install_path/fzf.zip" -DestinationPath "$tools_install_path/fzf"
     Remove-Item -Path "$tools_install_path/fzf.zip"
+  }
+}
+
+# Azure CLI installation
+prepend_path "$tools_install_path/az"
+prepend_path "$tools_install_path/az/bin"
+$azInstalled = Get-Command az -errorAction SilentlyContinue
+if (-not $forceInstall -and $azInstalled) {
+  Write-Debug "az installed, nice!"
+}
+else {
+  $toolInstallTitle = "Install ``az`` to your tools?"
+  $toolInstallDescription = "You have not installed az. This is necessary for certain tools. Install it?"
+  $toolInstallDefaultChoices = @(
+    [System.Management.Automation.Host.ChoiceDescription]::new("&YES", "Install az")
+    [System.Management.Automation.Host.ChoiceDescription]::new("&NO", "I will accept responibility for installing it on my own...")
+  )
+  $toolInstallDecision = $Host.UI.PromptForChoice(
+    $toolInstallTitle,
+    $toolInstallDescription,
+    $toolInstallDefaultChoices,
+    -1
+  )
+  # They are cool with me installing it.
+  if ($toolInstallDecision -eq 0) {
+    curl -L https://aka.ms/installazurecliwindowszipx64 -o "$tools_install_path/az.zip"
+    Expand-Archive -Force -Path "$tools_install_path/az.zip" -DestinationPath "$tools_install_path/az"
+    Remove-Item -Path "$tools_install_path/az.zip"
   }
 }
 
