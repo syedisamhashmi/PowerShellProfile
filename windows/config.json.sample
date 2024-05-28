@@ -14,6 +14,7 @@
     "RejectedAz": false,
     "RejectedFzf": false,
     "RejectedRipgrep": false,
-    "RejectedDotnet": false
+    "RejectedDotnet": false,
+    "RejectedEditor": false
   }
 }
