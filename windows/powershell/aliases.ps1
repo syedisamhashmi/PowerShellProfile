@@ -27,3 +27,10 @@ set-alias grep color_grep.ps1
 
 set-alias use_az_account use_az_account.ps1
 set-alias use-az-account use_az_account.ps1
+
+#? Adds VS Code insiders to path as code instead if present
+if (
+  get-command code-insiders.cmd -errorAction SilentlyContinue
+) {
+  set-alias -Name code -Value code-insiders.cmd
+}

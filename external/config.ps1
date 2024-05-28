@@ -9,29 +9,12 @@ $TOOLS_PATH = "c:/tools";
 prepend_path "$TOOLS_PATH/ripgrep"
 #? bat
 prepend_path "$TOOLS_PATH/bat"
-#? Code (Insiders)
-prepend_path "$HOME/AppData/Local/Programs/Microsoft VS Code Insiders/bin"
 
 install_package("posh-git")
 install_package("z")
 
 
-
-
-
-if (
-  Get-Command code-insiders.cmd -errorAction SilentlyContinue
-) {
-  Set-Alias -Name code -Value code-insiders.cmd
-}
-
 set-alias cat bat
-
-
-
-
-
-
 
 
 
@@ -52,18 +35,6 @@ function kill-chrome-re-run-with-debug {
 function setup-modules() {
   install-package("posh-git")
   install-package("z")
-}
-
-function install-package($package) {
-  if (
-    -Not(
-      Get-InstalledModule -Name $package  -errorAction SilentlyContinue
-    )
-  ) {
-    echo "Package $package is missing... Installing $package..."
-    Install-Module $package
-  }
-  Import-Module $package
 }
 
 #------------------------------------------------------------------------------

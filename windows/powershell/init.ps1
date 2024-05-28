@@ -30,4 +30,8 @@ $powershell_scripts_path = "$powershell_path/scripts";
 
 prepend_path "$powershell_scripts_path"
 
+#? Code (Insiders) (if present)
+prepend_path "$HOME/AppData/Local/Programs/Microsoft VS Code Insiders/bin"
+
+
 . $powershell_path/aliases.ps1
