@@ -8,5 +8,11 @@
   "AutoUpdate": {
     "LastChecked": null,
     "CheckPeriod": "daily"
+  },
+  "InstallPreferences": {
+    "RejectedNvm": false,
+    "RejectedAz": false,
+    "RejectedFzf": false,
+    "RejectedRipgrep": false,
   }
 }

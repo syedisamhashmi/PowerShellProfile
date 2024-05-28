@@ -17,8 +17,7 @@
 # Then use the use-node script:
 # use-node v16.20.2
 #
-$env:NVM_HOME = Split-Path -Parent (where.exe nvm);
-
+$env:NVM_HOME = Split-Path -Parent ((where.exe nvm) | Select-Object -Property $_ -First 1);
 # adds the nvm junction at the head of the path
 $env:PATH = "$env:NVM_HOME/nodejs;" + $env:PATH + ";$env:NVM_HOME;";
 

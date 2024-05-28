@@ -1,5 +1,6 @@
 [CmdletBinding()]
 param (
+  [switch]$Force
 )
 $autoUpdateTitle = "Automatic Updates"
 $autoUpdateDescription = "You have not opted in/out of automatic updates.`nWould you like to always attempt auto updates when available?"
@@ -14,6 +15,7 @@ if ($tools_repo_path -eq $null) {
 
 $config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
 if (
+  (-not $Force) -and
   $config.AutoUpdate.CheckPeriod -ne "session"
 ) {
   $now = Get-Date
