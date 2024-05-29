@@ -36,7 +36,6 @@ else {
 # If they have not rejected before, ask if they want to use tools.
 if ($config.InstallPreferences.RejectedTools -eq $null)
 {
-  Clear-Host
   $toolsPathReqTitle = "Tools Path"
   $toolsPathReqDescription = "Would you like to install developer tools?"
   $toolsPathReqDefaultChoices = @(
@@ -70,7 +69,6 @@ if ($config.InstallPreferences.RejectedTools -eq $true)
 
 if ($config.UserPreferences.ToolsPath -eq $null) {
   Write-Debug "ToolsPath not set"
-  Clear-Host
 
   $decision = $Host.UI.PromptForChoice(
     $toolsPathTitle,
@@ -103,7 +101,6 @@ if ($config.UserPreferences.ToolsPath -eq $null) {
 
     $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
   }
-  Clear-Host
 }
 else {
   Write-Debug "ToolsPath set"

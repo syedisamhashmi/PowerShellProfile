@@ -40,16 +40,12 @@ if (-not (Test-Path -PathType Container -Path $tools_install_path) ) {
   New-Item -ItemType Directory -Path $tools_install_path
 }
 
-Clear-Host
 . $PSScriptRoot/tool_install/install_fzf.ps1 -forceInstall:$forceInstall
 
-Clear-Host
 . $PSScriptRoot/tool_install/install_az.ps1 -forceInstall:$forceInstall
 
-Clear-Host
 . $PSScriptRoot/tool_install/install_dotnet.ps1 -forceInstall:$forceInstall
 
-Clear-Host
 # Add git to path.
 $GIT_PATH = where.exe git
 if ($GIT_PATH -ne $null)
@@ -59,11 +55,7 @@ if ($GIT_PATH -ne $null)
   prepend_path($GIT_DIR + "/usr/bin")
 }
 
-Clear-Host
 . $PSScriptRoot/tool_install/install_nvm.ps1 -forceInstall:$forceInstall
 
 
-Clear-Host
 . $PSScriptRoot/tool_install/install_ripgrep.ps1 -forceInstall:$forceInstall
-
-Clear-Host
