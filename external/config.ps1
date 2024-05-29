@@ -1,12 +1,7 @@
 $EDITOR = "vim"
 
-#? For local dotnet install
-prepend_path "$HOME/AppData/local/Microsoft/dotnet"
-
 # TODO: Setup config for Tools path
 $TOOLS_PATH = "c:/tools";
-#? Ripgrep
-prepend_path "$TOOLS_PATH/ripgrep"
 #? bat
 prepend_path "$TOOLS_PATH/bat"
 

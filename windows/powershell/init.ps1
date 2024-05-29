@@ -1,5 +1,6 @@
 [CmdletBinding()]
 param(
+  [switch]$forceInstall
 )
 
 if ($PSVersionTable.PSEdition -ne "Core") {
@@ -24,7 +25,7 @@ $powershell_scripts_path = "$powershell_path/scripts";
 
 . check_for_update
 
-. $powershell_path/tools.ps1
+. $powershell_path/tools.ps1 -forceInstall:$forceInstall
 
 . $powershell_path/process_config.ps1
 
