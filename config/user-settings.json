@@ -31,6 +31,24 @@
   "files.trimTrailingWhitespace": true,
 
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
+  "dotnetAcquisitionExtension.existingDotnetPath": [
+    {
+      "extensionId": "ms-dotnettools.csdevkit",
+      "path": "C:\\tools\\dotnet\\dotnet.exe"
+    },
+    {
+      "extensionId": "ms-dotnettools.vscodeintellicode-csharp",
+      "path": "C:\\tools\\dotnet\\dotnet.exe"
+    },
+    {
+      "extensionId": "ms-dotnettools.csharp",
+      "path": "C:\\tools\\dotnet\\dotnet.exe"
+    },
+    {
+      "extensionId": "ms-dotnettools.vscode-dotnet-runtime",
+      "path": "C:\\tools\\dotnet\\dotnet.exe"
+    }
+  ],
 
   "workbench.colorTheme": "Default Dark Modern",
   "editor.tabSize": 2,

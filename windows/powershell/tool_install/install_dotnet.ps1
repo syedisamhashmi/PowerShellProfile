@@ -21,6 +21,9 @@ if (
   $dotnetInstalled -and 
   (Test-Path -Path "$tools_install_path/dotnet" -PathType Container)
 ) {
+  
+  $DOTNET_ROOT = "tools_install_path/dotnet"
+  prepend_path "$HOME/AppData/Local/Microsoft/dotnet"
   Write-Debug "dotnet installed, nice!"
 }
 else {
@@ -47,6 +50,8 @@ else {
       if (-not (Test-Path -PathType Container -Path "$tools_install_path/dotnet")) {
         New-Item -Force -Path "$tools_install_path/dotnet" -ItemType Container 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
       }
+      $DOTNET_ROOT = "tools_install_path/dotnet"
+      prepend_path "$HOME/AppData/Local/Microsoft/dotnet"
       Invoke-WebRequest -Uri https://dot.net/v1/dotnet-install.ps1 -OutFile "$tools_install_path/dotnet/dotnet-install.ps1"
       Write-Output "Installing dotnet version 6.0.422..."
       Invoke-Expression "$tools_install_path/dotnet/dotnet-install.ps1 dotnet -Version 6.0.422 -InstallDir $tools_install_path/dotnet" 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
