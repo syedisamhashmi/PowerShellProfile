@@ -12,6 +12,7 @@
 #  PS C:\vs> mkpr main
 #
 #--------------------------------------------------------------------------------------------------------
+[CmdletBinding()]
 param(
   [string]$target,
   [string]$description

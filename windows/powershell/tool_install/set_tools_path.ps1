@@ -3,86 +3,59 @@ param(
   [switch]$forceInstall
 )
 
-if ($tools_repo_path -eq $null) {
+if ($MyInvocation.InvocationName -ne ".") {
   $tools_repo_path = "$PSScriptRoot/../..";
+  . $tools_repo_path/powershell/functions/prepend_path.ps1 "$PSScriptRoot/functions"
 }
 
-$toolsPathTitle = "Tools Path"
-$toolsPathDescription = "You have not set your 'tools' path.`nWould you like to use the default? (c:/tools)"
-$toolsPathDefaultChoices = @(
-  [System.Management.Automation.Host.ChoiceDescription]::new("&YES", "Use default tools path for tool binaries. (c:/tools)")
-  [System.Management.Automation.Host.ChoiceDescription]::new("&NO", "I want to put my tools elsewhere...")
-)
-
-. $tools_repo_path/powershell/functions/create_config.ps1
-
-$config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
+. create_config.ps1
 
 # User has tools path set, great.
+$config = get_or_create_config_key "UserPreferences.ToolsPath"
 if ($config.UserPreferences.ToolsPath -ne $null) {
   return
 }
 
-# Check and add to config if they rejected tools or not.
-if (-not ("RejectedTools" -in $config.InstallPreferences.PSobject.Properties.Name)) {
-  Write-Debug "RejectedTools not found"
-  Add-Member -Force -InputObject $config.InstallPreferences -NotePropertyName RejectedTools -NotePropertyValue $null
-  $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
-}
-else {
-  Write-Debug "RejectedTools found"
-}
-
+$config = get_or_create_config_key "InstallPreferences.RejectedTools"
 # If they have not rejected before, ask if they want to use tools.
 if ($config.InstallPreferences.RejectedTools -eq $null)
 {
-  $toolsPathReqTitle = "Tools Path"
-  $toolsPathReqDescription = "Would you like to install developer tools?"
-  $toolsPathReqDefaultChoices = @(
-    [System.Management.Automation.Host.ChoiceDescription]::new("&YES", "Yes, I want to set my tools in a specified location")
-    [System.Management.Automation.Host.ChoiceDescription]::new("&NO", "I will handle my tools...")
-  )
-  $decision = $Host.UI.PromptForChoice(
-    $toolsPathReqTitle,
-    $toolsPathReqDescription,
-    $toolsPathReqDefaultChoices,
-    -1
-  )
+  $decision = yes_no_prompt `
+    -title "Developer Tools" `
+    -description "Would you like to install developer tools?"
+    -yes "Yes, I want to install developer tools" `
+    -no "I will handle my tools...";
   # They said they want tools, never ask again.
   if ($decision -eq 0) {
-    $config.InstallPreferences.RejectedTools = $false
-    $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
+    $config = get_or_create_config_key "InstallPreferences.RejectedTools" $false
   }
   # They said they don't want tools, never ask again.
   if ($decision -eq 1) {
-    $config.InstallPreferences.RejectedTools = $true
-    $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
+    $config = get_or_create_config_key "InstallPreferences.RejectedTools" $true
   }
   
 }
 
-$config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
 if ($config.InstallPreferences.RejectedTools -eq $true)
 {
-  exit
+  return
 }
 
+$config = get_or_create_config_key "UserPreferences.ToolsPath"
 if ($config.UserPreferences.ToolsPath -eq $null) {
   Write-Debug "ToolsPath not set"
-
-  $decision = $Host.UI.PromptForChoice(
-    $toolsPathTitle,
-    $toolsPathDescription,
-    $toolsPathDefaultChoices,
-    -1
-  )
+  $decision = yes_no_prompt `
+    -title "Tools Path" `
+    -description "You have not set your 'tools' path.`nWould you like to use the default? (c:/tools)"
+    -yes "Use default tools path for tool binaries. (c:/tools)" `
+    -no "I want to put my tools elsewhere...";
+  
   # They are cool with default tools path, great.
   if ($decision -eq 0) {
-    Add-Member -Force -InputObject $config.UserPreferences -NotePropertyName ToolsPath -NotePropertyValue "c:/tools"
-    if (-not (Test-Path -PathType Container -Path "c:/tools") ) {
-      New-Item -ItemType Directory -Path "c:/tools"
+    $config = get_or_create_config_key "UserPreferences.ToolsPath" "c:/tools"
+    if (-not (Test-Path -PathType Container -Path $config.UserPreferences.ToolsPath) ) {
+      New-Item -ItemType Directory -Path $config.UserPreferences.ToolsPath
     }
-    $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
   }
   # Ask for a path and test it.
   if ($decision -eq 1) {
@@ -97,9 +70,7 @@ if ($config.UserPreferences.ToolsPath -eq $null) {
         Write-Host "Invalid path ``$user_given_path`` does not exist!"
       }
     }
-    Add-Member -Force -InputObject $config.UserPreferences -NotePropertyName ToolsPath -NotePropertyValue $user_given_path
-
-    $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
+    $config = get_or_create_config_key "UserPreferences.ToolsPath" $user_given_path
   }
 }
 else {

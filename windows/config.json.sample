@@ -7,7 +7,7 @@
   },
   "AutoUpdate": {
     "LastChecked": null,
-    "CheckPeriod": "daily"
+    "CheckPeriod": null
   },
   "InstallPreferences": {
     "RejectedNvm": false,

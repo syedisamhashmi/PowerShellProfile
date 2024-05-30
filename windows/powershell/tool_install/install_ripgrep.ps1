@@ -3,12 +3,13 @@ param(
   [switch]$forceInstall
 )
 
-if ($tools_repo_path -eq $null) {
+if ($MyInvocation.InvocationName -ne ".") {
   $tools_repo_path = "$PSScriptRoot/../..";
+  . $tools_repo_path/powershell/functions/prepend_path.ps1 "$PSScriptRoot/functions"
 }
 
-# Add install preferences if not present
-$config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
+$config = get_or_create_config_key "InstallPreferences"
+$tools_install_path = $config.UserPreferences.ToolsPath
 
 # Ripgrep installation
 prepend_path "$tools_install_path/ripgrep"
@@ -17,33 +18,24 @@ if (-not $forceInstall -and $rgInstalled) {
   Write-Debug "rg installed, nice!"
 }
 else {
-  Write-Debug "rg not installed"
-  $config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
-  if (-not ("RejectedRipgrep" -in $config.InstallPreferences.PSobject.Properties.Name)) {
-    Write-Debug "RejectedRipgrep not found"
-    Add-Member -Force -InputObject $config.InstallPreferences -NotePropertyName RejectedRipgrep -NotePropertyValue $false
-    $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
-  }
-  else {
-    Write-Debug "RejectedRipgrep found"
-  }
+  Write-Debug "rg not installed or force install"
 
-  if ($forceInstall -or (-not ($config.InstallPreferences.RejectedRipgrep)))
+  $config = get_or_create_config_key "InstallPreferences.RejectedRipGrep"
+  if (
+    $forceInstall -or 
+    ($config.InstallPreferences.RejectedRipGrep -eq $null) -or 
+    (-not $config.InstallPreferences.RejectedRipgrep)
+  )
   {
-    $toolInstallTitle = "Install ``ripgrep`` to your tools?"
-    $toolInstallDescription = "You have not installed ripgrep. This might be necessary for certain tools. Install it?"
-    $toolInstallDefaultChoices = @(
-      [System.Management.Automation.Host.ChoiceDescription]::new("&YES", "Install rg")
-      [System.Management.Automation.Host.ChoiceDescription]::new("&NO", "I will accept responsibility for installing it on my own...")
-    )
-    $toolInstallDecision = $Host.UI.PromptForChoice(
-      $toolInstallTitle,
-      $toolInstallDescription,
-      $toolInstallDefaultChoices,
-      -1
-    )
+    $toolInstallDecision = yes_no_prompt `
+      -title "Install ``ripgrep`` to your tools?" `
+      -description "You have not installed ripgrep. This is necessary for certain tools. Install it?"
+      -yes "Install ripgrep" `
+      -no "I will accept responsibility for installing it on my own...";
+    
     # They are cool with me installing it.
     if ($toolInstallDecision -eq 0) {
+      $config = get_or_create_config_key "InstallPreferences.RejectedRipGrep" $false
       if (Test-Path -PathType Container -Path "$tools_install_path/ripgrep") {
         Remove-Item -Recurse -Force -Path "$tools_install_path/ripgrep"
       }
@@ -55,8 +47,7 @@ else {
     }
     # They will install on their own, document and never ask again.
     if ($toolInstallDecision -eq 1) {
-      $config.InstallPreferences.RejectedRipgrep = $true
-      $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
+      $config = get_or_create_config_key "InstallPreferences.RejectedRipGrep" $true
     }
   }
   else {

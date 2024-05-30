@@ -3,13 +3,15 @@ param(
   [switch]$forceInstall
 )
 
-if ($tools_repo_path -eq $null) {
+if ($MyInvocation.InvocationName -ne ".") {
   $tools_repo_path = "$PSScriptRoot/../..";
+  . $tools_repo_path/powershell/functions/prepend_path.ps1 "$PSScriptRoot/functions"
 }
 
 # Add install preferences if not present
-$config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
 
+$config = get_or_create_config_key "UserPreferences.ToolsPath"
+$tools_install_path = $config.UserPreferences.ToolsPath
 
 # Azure CLI installation
 prepend_path "$tools_install_path/az"
@@ -19,33 +21,23 @@ if (-not $forceInstall -and $azInstalled) {
   Write-Debug "az installed, nice!"
 }
 else {
-  Write-Debug "az not installed"
-  $config = Get-Content -Path "$tools_repo_path/config.json" | ConvertFrom-Json
-  if (-not ("RejectedAz" -in $config.InstallPreferences.PSobject.Properties.Name)) {
-    Write-Debug "RejectedAz not found"
-    Add-Member -Force -InputObject $config.InstallPreferences -NotePropertyName RejectedAz -NotePropertyValue $false
-    $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
-  }
-  else {
-    Write-Debug "RejectedAz found"
-  }
+  Write-Debug "az not installed or force install"
 
-  if ($forceInstall -or (-not ($config.InstallPreferences.RejectedAz)))
+  $config = get_or_create_config_key "InstallPreferences.RejectedAz"
+  if (
+    $forceInstall -or 
+    ($config.InstallPreferences.RejectedAz -eq $null) -or 
+    (-not $config.InstallPreferences.RejectedAz)
+  )
   {
-    $toolInstallTitle = "Install ``az`` to your tools?"
-    $toolInstallDescription = "You have not installed az. This is necessary for certain tools. Install it?"
-    $toolInstallDefaultChoices = @(
-      [System.Management.Automation.Host.ChoiceDescription]::new("&YES", "Install az")
-      [System.Management.Automation.Host.ChoiceDescription]::new("&NO", "I will accept responsibility for installing it on my own...")
-    )
-    $toolInstallDecision = $Host.UI.PromptForChoice(
-      $toolInstallTitle,
-      $toolInstallDescription,
-      $toolInstallDefaultChoices,
-      -1
-    )
+    $toolInstallDecision = yes_no_prompt `
+      -title "Install ``az`` to your tools?" `
+      -description "You have not installed az. This is necessary for certain tools. Install it?"
+      -yes "Install az" `
+      -no "I will accept responsibility for installing it on my own...";
     # They are cool with me installing it.
     if ($toolInstallDecision -eq 0) {
+      $config = get_or_create_config_key "InstallPreferences.RejectedAz" $false
       if (Test-Path -PathType Container -Path "$tools_install_path/az") {
         Remove-Item -Recurse -Force -Path "$tools_install_path/az"
       }
@@ -55,8 +47,7 @@ else {
     }
     # They will install on their own, document and never ask again.
     if ($toolInstallDecision -eq 1) {
-      $config.InstallPreferences.RejectedAz = $true
-      $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
+      $config = get_or_create_config_key "InstallPreferences.RejectedAz" $true
     }
   } else {
     Write-Debug "NOT asking to install az, they rejected previously"

@@ -2,8 +2,13 @@
 param(
 )
 
-if ($tools_repo_path -eq $null) {
+if ($config -ne $null) {
+  return
+}
+
+if ($MyInvocation.InvocationName -ne ".") {
   $tools_repo_path = "$PSScriptRoot/../..";
+  . $tools_repo_path/powershell/functions/prepend_path.ps1 "$PSScriptRoot/functions"
 }
 
 # Create config if non-existent or empty
@@ -16,5 +21,5 @@ if (
   Write-Debug "User config created..."
 }
 else {
-  Write-Debug "User config already exists..."
+  Write-Verbose "User config already exists..."
 }
