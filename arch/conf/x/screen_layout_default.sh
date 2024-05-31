@@ -1,4 +1,5 @@
 #!/bin/sh
-xrandr --output HDMI-0 --auto --mode 2560x1440 --pos 0x0 --rotate normal --output DP-0 --auto --primary --mode 5120x1440 --pos 2560x0 --rotate normal 
-#xrandr --output HDMI-0 --mode 2560x1440 --pos 0x0 --rotate normal --output DP-0 --primary --mode 5120x1440 --pos 2560x0 --rotate normal 
-
+xrandr --output "DP-0" --auto;	 
+xrandr --output "DP-2" --auto;
+xrandr --output "DP-2" --mode 5120x1440 --rate 239.76 --pos 2560x0; 
+xrandr --output "DP-0" --mode 2560x1440 --rate 59.95 --pos 0x0;	 

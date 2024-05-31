@@ -1,0 +1,17 @@
+# /etc/systemd/system/hotplug-monitor.service
+
+[Unit]
+Description=Monitor hotplug service
+
+[Service]
+Type=simple
+
+# Make the service run as your user and not as root
+User=prosdkr
+# add your username here
+
+# Change path to hotplug script as needed
+ExecStart=/bin/sh -c '/usr/local/bin/hotplug-monitor.sh >> /home/prosdkr/hotplug-service.log'
+
+[Install]
+WantedBy=multi-user.target
