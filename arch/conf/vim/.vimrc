@@ -41,3 +41,8 @@ silent! packadd nerd_tree
 if exists(':NERDTree')
   map <F1> :NERDTreeToggle<CR>
 endif
+
+hi DiffAdd      ctermfg=NONE          ctermbg=Green
+hi DiffChange   ctermfg=NONE          ctermbg=NONE
+hi DiffDelete   ctermfg=LightBlue     ctermbg=Red
+hi DiffText     ctermfg=Yellow        ctermbg=Red

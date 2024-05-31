@@ -20,7 +20,7 @@ if (
   $nvmInstalled -and
   (Test-Path -PathType Container -Path "$tools_install_path/nvm")
 ) {
-  Write-Debug "nvm installed, nice!"
+  Write-Verbose "nvm installed, nice!"
 }
 else {
   Write-Debug "nvm not installed or force install"
@@ -66,14 +66,14 @@ if (
   (Test-Path "$tools_install_path/nvm" -PathType Container)
 ) {
   . $tools_install_path/nvm/use-node.ps1
-  Write-Debug "nvm installed, sourced use-node script"
+  Write-Verbose "nvm installed, sourced use-node script"
 }
 if (
   $nvmInstalled -and 
   (Test-Path "$tools_install_path/nvm"  -PathType Container) -and
   (Get-ChildItem -Path "$tools_install_path/nvm" | Where-Object {$_ -match "nodejs"} | Where-Object { Test-Path -Path $_ -PathType Container }).Count -eq 0
 ) {
-  Write-Debug "nodejs not linked"
+  Write-Verbose "nodejs not linked"
   use-node 1>$null 2>$null 3>$null 4>$null 5>$null 6>$null
 }
 if (

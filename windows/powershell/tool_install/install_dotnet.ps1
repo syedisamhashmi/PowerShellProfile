@@ -24,7 +24,7 @@ if (
   
   $DOTNET_ROOT = "tools_install_path/dotnet"
   prepend_path "$HOME/AppData/Local/Microsoft/dotnet"
-  Write-Debug "dotnet installed, nice!"
+  Write-Verbose "dotnet installed, nice!"
 }
 else {
   Write-Debug "dotnet not installed or force install"

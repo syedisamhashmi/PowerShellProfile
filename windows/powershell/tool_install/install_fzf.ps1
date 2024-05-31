@@ -16,7 +16,7 @@ $tools_install_path = $config.UserPreferences.ToolsPath
 prepend_path "$tools_install_path/fzf"
 $fzfInstalled = Get-Command fzf -errorAction SilentlyContinue
 if (-not $forceInstall -and $fzfInstalled) {
-  Write-Debug "fzf installed, nice!"
+  Write-Verbose "fzf installed, nice!"
 }
 else {
   Write-Debug "fzf not installed or forceInstall"

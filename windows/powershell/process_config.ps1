@@ -129,6 +129,6 @@ if ($config.UserPreferences.Editor -eq $null)
   }
 }
 else {
-  Write-Debug "Editor found"
+  Write-Verbose "Editor found"
   $EDITOR = $config.UserPreferences.Editor
 }

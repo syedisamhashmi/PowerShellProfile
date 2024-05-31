@@ -15,7 +15,7 @@ $tools_install_path = $config.UserPreferences.ToolsPath
 prepend_path "$tools_install_path/ripgrep"
 $rgInstalled = Get-Command rg -errorAction SilentlyContinue
 if (-not $forceInstall -and $rgInstalled) {
-  Write-Debug "rg installed, nice!"
+  Write-Verbose "rg installed, nice!"
 }
 else {
   Write-Debug "rg not installed or force install"

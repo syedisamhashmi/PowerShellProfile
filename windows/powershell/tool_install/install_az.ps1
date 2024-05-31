@@ -18,7 +18,7 @@ prepend_path "$tools_install_path/az"
 prepend_path "$tools_install_path/az/bin"
 $azInstalled = Get-Command az -errorAction SilentlyContinue
 if (-not $forceInstall -and $azInstalled) {
-  Write-Debug "az installed, nice!"
+  Write-Verbose "az installed, nice!"
 }
 else {
   Write-Debug "az not installed or force install"
