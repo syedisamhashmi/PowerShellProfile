@@ -156,9 +156,10 @@ signal=11
 
 # Guess the weather hourly
 [weather]
-command=curl -Ss 'https://wttr.in/fort-worth?0&T&Q' | cut -c 16- | head -2 | xargs echo
+command=curl -Ss 'https://wttr.in/fort-worth?0&Q&T' | cut -c 16- | head -2 | xargs echo
 interval=450
 color=#A4C2F4
+min_width=100
 
 [toggle]
 #command=/home/prosdkr/i3blocks/vpn/vpn

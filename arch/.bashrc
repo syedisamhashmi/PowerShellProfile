@@ -38,7 +38,7 @@ source $SCRIPT_DIR/env.sh
 source $SCRIPT_DIR/aliases.sh
 
 # Set up LEDs, its fast.
-source $SCRIPT_DIR/conf/liquidctl/liquidctl.sh
+source $SCRIPT_DIR/conf/liquidctl/liquidctl.sh > /dev/null
 
 # Path
 #-------------------------------------------------------------------
