@@ -28,7 +28,7 @@ else {
   | Sort-Object | Get-Unique `
   | fzf;
 }
-Write-Output "Making PR to: $branch"
+Write-Host "Making PR to: $branch"
 
 # If there is a description override, don't use template content or git log.
 if (-not $description) {

@@ -34,7 +34,7 @@ else {
   {
     $toolInstallDecision = yes_no_prompt `
       -title "Install ``nvm`` to your tools?" `
-      -description "You have not installed nvm. This is necessary for certain tools. Install it?"
+      -description "You have not installed nvm. This is necessary for certain tools. Install it?" `
       -yes "Install nvm" `
       -no "I will accept responsibility for installing it on my own...";
     # They are cool with me installing it.

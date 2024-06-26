@@ -538,18 +538,18 @@ function Assert-Success {
 
 #region help methods
 function Show-ReleaseNotesHelpText {
-  Write-Output "Before using this script, checkout your release branch and get latest"
-  Write-Output ""
-  Write-Output "This code expects a build info file, './repo-projects.json', at the respository root"
-  Write-Output "You can specify the file path in the Build-ReleaseNotes command, if found elsewhere"
-  Write-Output ""
-  Write-Output "If you don't have a range for the notes to cover prepared, you can specify one with either tags or the hash in interactive mode."
-  Write-Output "This also pipes the output to your clipboard."
-  Write-Output "> Build-ReleaseNotes | Set-Clipboard"
-  Write-Output ""
-  Write-Output "If you do have a range prepared, you can build release notes with the following command."
-  Write-Output "In this, 581b5e2671 is the point where the prior release was split from the development branch, and up to the tip of the current branch:"
-  Write-Output "> `$refRange = '581b5e26711b33b32cdf388fbde515105f84f7d2~1..HEAD'"
-  Write-Output "> Build-ReleaseNotes -RefRange `$refRange | Set-Clipboard"
+  Write-Host "Before using this script, checkout your release branch and get latest"
+  Write-Host ""
+  Write-Host "This code expects a build info file, './repo-projects.json', at the respository root"
+  Write-Host "You can specify the file path in the Build-ReleaseNotes command, if found elsewhere"
+  Write-Host ""
+  Write-Host "If you don't have a range for the notes to cover prepared, you can specify one with either tags or the hash in interactive mode."
+  Write-Host "This also pipes the output to your clipboard."
+  Write-Host "> Build-ReleaseNotes | Set-Clipboard"
+  Write-Host ""
+  Write-Host "If you do have a range prepared, you can build release notes with the following command."
+  Write-Host "In this, 581b5e2671 is the point where the prior release was split from the development branch, and up to the tip of the current branch:"
+  Write-Host "> `$refRange = '581b5e26711b33b32cdf388fbde515105f84f7d2~1..HEAD'"
+  Write-Host "> Build-ReleaseNotes -RefRange `$refRange | Set-Clipboard"
 }
 #endregion help methods

@@ -32,7 +32,7 @@ else {
   {
     $toolInstallDecision = yes_no_prompt `
       -title "Install ``az`` to your tools?" `
-      -description "You have not installed az. This is necessary for certain tools. Install it?"
+      -description "You have not installed az. This is necessary for certain tools. Install it?" `
       -yes "Install az" `
       -no "I will accept responsibility for installing it on my own...";
     # They are cool with me installing it.

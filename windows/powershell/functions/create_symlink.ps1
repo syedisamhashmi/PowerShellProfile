@@ -10,7 +10,7 @@ param(
 $symbolToMake = $symbolToMake.Replace("\", "/");
 $originalFile = $originalFile.Replace("\", "/");
 
-Write-Output "Linking $symbolToMake to $originalFile"
+Write-Host "Linking $symbolToMake to $originalFile"
 
 # Allow symbolic links by default, hard links require -h flag.
 # Workaround for non-admin access... Thanks Ross :)

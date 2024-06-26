@@ -34,10 +34,13 @@ if (-not (Test-Path -PathType Container -Path $config.UserPreferences.ToolsPath)
   New-Item -ItemType Directory -Path $config.UserPreferences.ToolsPath
 }
 
+. $PSScriptRoot/install_jq.ps1 -forceInstall:$forceInstall
+. $PSScriptRoot/set_default_shell.ps1 -forceInstall:$forceInstall
 . $PSScriptRoot/install_fzf.ps1 -forceInstall:$forceInstall
 
 . $PSScriptRoot/install_az.ps1 -forceInstall:$forceInstall
 
+. $PSScriptRoot/install_7zip.ps1 -forceInstall:$forceInstall
 . $PSScriptRoot/install_dotnet.ps1 -forceInstall:$forceInstall
 
 # Add git to path.

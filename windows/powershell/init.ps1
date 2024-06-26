@@ -3,6 +3,9 @@ param(
   [switch]$forceInstall
 )
 
+$before = $ErrorActionPreference
+$ErrorActionPreference = "SilentlyContinue"
+
 if ($PSVersionTable.PSEdition -ne "Core") {
   Write-Error "This is not the correct powershell, use the one from the Windows store!!!!"
   Write-Error "This is not the correct powershell, use the one from the Windows store!!!!"
@@ -23,6 +26,8 @@ prepend_path "$powershell_scripts_path"
 #? Code (Insiders) (if present)
 prepend_path "$HOME/AppData/Local/Programs/Microsoft VS Code Insiders/bin"
 
+# Create config if not found
+create_config.ps1
 
 
 $checkUpdateTime = Measure-Command {
@@ -44,3 +49,4 @@ Write-Debug "Process config time: $($processConfigTime.TotalMilliseconds)"
 
 # Persist config
 $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
+$ErrorActionPreference = $before

@@ -22,7 +22,7 @@ if ($config.InstallPreferences.RejectedTools -eq $null)
 {
   $decision = yes_no_prompt `
     -title "Developer Tools" `
-    -description "Would you like to install developer tools?"
+    -description "Would you like to install developer tools?" `
     -yes "Yes, I want to install developer tools" `
     -no "I will handle my tools...";
   # They said they want tools, never ask again.
@@ -46,7 +46,7 @@ if ($config.UserPreferences.ToolsPath -eq $null) {
   Write-Debug "ToolsPath not set"
   $decision = yes_no_prompt `
     -title "Tools Path" `
-    -description "You have not set your 'tools' path.`nWould you like to use the default? (c:/tools)"
+    -description "You have not set your 'tools' path.`nWould you like to use the default? (c:/tools)" `
     -yes "Use default tools path for tool binaries. (c:/tools)" `
     -no "I want to put my tools elsewhere...";
   

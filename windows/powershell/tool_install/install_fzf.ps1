@@ -30,7 +30,7 @@ else {
   {
     $toolInstallDecision = yes_no_prompt `
       -title "Install ``fzf`` to your tools?" `
-      -description "You have not installed fzf. This is necessary for certain tools. Install it?"
+      -description "You have not installed fzf. This is necessary for certain tools. Install it?" `
       -yes "Install fzf" `
       -no "I will accept responsibility for installing it on my own...";
     # They are cool with me installing it.

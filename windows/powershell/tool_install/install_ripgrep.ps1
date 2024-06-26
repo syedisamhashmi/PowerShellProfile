@@ -29,7 +29,7 @@ else {
   {
     $toolInstallDecision = yes_no_prompt `
       -title "Install ``ripgrep`` to your tools?" `
-      -description "You have not installed ripgrep. This is necessary for certain tools. Install it?"
+      -description "You have not installed ripgrep. This is necessary for certain tools. Install it?" `
       -yes "Install ripgrep" `
       -no "I will accept responsibility for installing it on my own...";
     

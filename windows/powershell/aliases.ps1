@@ -34,3 +34,13 @@ if (
 ) {
   set-alias -Name code -Value code-insiders.cmd
 }
+
+function coverage_clean()
+{
+  Get-ChildItem ./* -Recurse -Force -Include "coverage.cobertura.xml" | Remove-Item -Force
+}
+function coverage()
+{
+  coverage_clean
+  dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./'
+}

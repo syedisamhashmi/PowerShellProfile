@@ -16,5 +16,9 @@
     "RejectedRipgrep": false,
     "RejectedDotnet": false,
     "RejectedEditor": false
+    "RejectedJq": false,
+    "RejectedDefaultTerminal": false,
+
+    "Rejected7z": false
   }
 }

@@ -66,7 +66,7 @@ if ($MyInvocation.InvocationName -ne ".") {
 
 
 # Create config if it does not exist
-. create_config.ps1
+create_config.ps1
 
 # Get config
 if ($config -eq $null) {
@@ -79,7 +79,11 @@ $valueAdded = AddOrUpdateKeyToObject -key $parts -object $config -valueToSet $va
 
 # Persist config
 # Config is persisted at end of init, this is for running individually
-if ($MyInvocation.InvocationName -ne ".") {
+if (
+  $MyInvocation.InvocationName -ne "." -and 
+  $MyInvocation.InvocationName -ne "get_or_create_config_key"
+) {
+  #Write-Host "Saving config $($MyInvocation.InvocationName)"
   $config | ConvertTo-Json | Out-File -FilePath "$tools_repo_path/config.json"
 }
 
