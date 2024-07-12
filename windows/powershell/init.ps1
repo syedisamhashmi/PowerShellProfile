@@ -10,6 +10,7 @@ if ($PSVersionTable.PSEdition -ne "Core") {
   Write-Error "This is not the correct powershell, use the one from the Windows store!!!!"
   Write-Error "This is not the correct powershell, use the one from the Windows store!!!!"
   Write-Error "This is not the correct powershell, use the one from the Windows store!!!!"
+  . $PSScriptRoot/powershell/tool_install/set_default_shell.ps1 -forceInstall:$true
   exit 1;
 }
 
@@ -23,8 +24,6 @@ $powershell_scripts_path = "$powershell_path/scripts";
 # and now we can use prepend going forward since it will be in the path.
 . $powershell_functions_path/prepend_path.ps1 "$powershell_functions_path"
 prepend_path "$powershell_scripts_path"
-#? Code (Insiders) (if present)
-prepend_path "$HOME/AppData/Local/Programs/Microsoft VS Code Insiders/bin"
 
 # Create config if not found
 create_config.ps1
@@ -44,6 +43,9 @@ $processConfigTime = Measure-Command {
   . $powershell_path/process_config.ps1
 }
 Write-Debug "Process config time: $($processConfigTime.TotalMilliseconds)"
+
+prepend_path "c:/Program Files/Google/Chrome/Application"
+prepend_path "c:/Program Files (x86)/Google/Chrome/Application"
 
 . $powershell_path/aliases.ps1
 

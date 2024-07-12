@@ -38,10 +38,15 @@ if (-not (Test-Path -PathType Container -Path $config.UserPreferences.ToolsPath)
 . $PSScriptRoot/set_default_shell.ps1 -forceInstall:$forceInstall
 . $PSScriptRoot/install_fzf.ps1 -forceInstall:$forceInstall
 
+. $PSScriptRoot/install_azuredatastudio.ps1 -forceInstall:$forceInstall
 . $PSScriptRoot/install_az.ps1 -forceInstall:$forceInstall
+. $PSScriptRoot/install_vscode.ps1 -forceInstall:$forceInstall
 
 . $PSScriptRoot/install_7zip.ps1 -forceInstall:$forceInstall
+. $PSScriptRoot/install_llvm.ps1 -forceInstall:$forceInstall
+
 . $PSScriptRoot/install_dotnet.ps1 -forceInstall:$forceInstall
+prepend_path "$tools_install_path/dotnet"
 
 # Add git to path.
 $GIT_PATH = where.exe git

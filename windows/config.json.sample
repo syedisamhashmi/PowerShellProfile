@@ -15,7 +15,7 @@
     "RejectedFzf": false,
     "RejectedRipgrep": false,
     "RejectedDotnet": false,
-    "RejectedEditor": false
+    "RejectedEditor": false,
     "RejectedJq": false,
     "RejectedDefaultTerminal": false,
 

@@ -2,9 +2,10 @@ $before = $ErrorActionPreference
 $ErrorActionPreference = "SilentlyContinue"
 
 if ($PSVersionTable.PSEdition -ne "Core") {
-  Write-Error "This is not the correct powershell, use the one from the Windows store!!!!"
-  Write-Error "This is not the correct powershell, use the one from the Windows store!!!!"
-  Write-Error "This is not the correct powershell, use the one from the Windows store!!!!"
+  Write-Host "This is not the correct powershell, use the one from the Windows store!!!!"
+  Write-Host "This is not the correct powershell, use the one from the Windows store!!!!"
+  Write-Host "This is not the correct powershell, use the one from the Windows store!!!!"
+  . $PSScriptRoot/powershell/tool_install/set_default_shell.ps1 -forceInstall:$true
   exit 1;
 }
 
@@ -39,3 +40,8 @@ else {
 }
 
 $ErrorActionPreference = $before
+
+# Removes any silly requests for trust 
+# by re-trusting the default powershell upfront.
+Unregister-PackageSource -Source PSGallery
+Register-PackageSource -Name PSGallery -ProviderName PowerShellGet -Trusted 
