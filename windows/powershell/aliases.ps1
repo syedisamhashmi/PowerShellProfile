@@ -3,7 +3,8 @@ set-alias mkpr git-make-pull-request.ps1
 # Source the generate release notes so we can alias it.
 . $PSScriptRoot/scripts/generate-release-notes.ps1;
 set-alias BuildReleaseNotes Build-ReleaseNotes
-set-alias populate-sln $PSScriptRoot/scripts/populate_sln.ps1
+set-alias populate_sln $PSScriptRoot/functions/populate_sln.ps1
+set-alias populate-sln $PSScriptRoot/functions/populate_sln.ps1
 
 # If someone runs the "./generate-release-notes.ps1", show help
 # so that we can be kind of nice and backwards compatible lol
@@ -27,20 +28,19 @@ set-alias grep color_grep.ps1
 
 set-alias use_az_account use_az_account.ps1
 set-alias use-az-account use_az_account.ps1
+set-alias deploy_db deploy_db.ps1
 
-function coverage_clean()
-{
+
+function coverage_clean() {
   Get-ChildItem ./* -Recurse -Force -Include "coverage.cobertura.xml" | Remove-Item -Force
 }
-function coverage()
-{
+function coverage() {
   coverage_clean
   dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./'
 }
 
 #? Backgrounds code when used
-function code()
-{
+function code() {
   if (
     get-command code -errorAction SilentlyContinue
   ) {
